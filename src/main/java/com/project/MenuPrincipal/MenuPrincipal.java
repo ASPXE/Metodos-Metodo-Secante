@@ -4,6 +4,8 @@
  */
 package com.project.MenuPrincipal;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author aspxe
@@ -108,7 +110,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         lblIntervaloA.setText("Intervalo A");
         getContentPane().add(lblIntervaloA);
-        lblIntervaloA.setBounds(230, 210, 80, 18);
+        lblIntervaloA.setBounds(240, 210, 80, 18);
 
         txtIntervaloA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,9 +122,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         lblIntervaloB.setText("Intervalo B");
         getContentPane().add(lblIntervaloB);
-        lblIntervaloB.setBounds(400, 210, 68, 18);
+        lblIntervaloB.setBounds(430, 210, 68, 18);
         getContentPane().add(txtIntervaloB);
-        txtIntervaloB.setBounds(400, 240, 110, 24);
+        txtIntervaloB.setBounds(410, 240, 110, 24);
 
         lblDecimales.setText("Decimales a trabajar");
         getContentPane().add(lblDecimales);
@@ -133,6 +135,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         cbDecimales.setBounds(40, 410, 72, 24);
 
         btnCalcular.setText("Calcular");
+        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalcularActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnCalcular);
         btnCalcular.setBounds(30, 480, 110, 24);
 
@@ -142,6 +149,109 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void txtIntervaloAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIntervaloAActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIntervaloAActionPerformed
+
+    private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
+
+        double grado6 = 0, grado5 = 0, grado4 = 0, grado3 = 0, grado2 = 0, grado1 = 0, constante, intervaloA = 0, intervaloB = 0, porcentajeError = 0, fx0 = 0, fx1 = 0, intervalo2B = 0, xn = 0, ec = 0;
+        int numeroDecimales = 0, seleccionCb = 0, contador = 0;
+
+        if (txtGrado6.getText().equals("")) {
+            grado6 = 0;
+        } else {
+            grado6 = Double.parseDouble(txtGrado6.getText());
+        }
+        if (txtGrado5.getText().equals("")) {
+            grado5 = 0;
+        } else {
+            grado5 = Double.parseDouble(txtGrado5.getText());
+        }
+        if (txtGrado4.getText().equals("")) {
+            grado4 = 0;
+        } else {
+            grado4 = Double.parseDouble(txtGrado4.getText());
+        }
+        if (txtGrado3.getText().equals("")) {
+            grado3 = 0;
+        } else {
+            grado3 = Double.parseDouble(txtGrado3.getText());
+        }
+        if (txtGrado2.getText().equals("")) {
+            grado2 = 0;
+        } else {
+            grado2 = Double.parseDouble(txtGrado2.getText());
+        }
+        if (txtGrado1.getText().equals("")) {
+            grado1 = 0;
+        } else {
+            grado1 = Double.parseDouble(txtGrado1.getText());
+        }
+        if (txtConstante.getText().equals("")) {
+            constante = 0;
+        } else {
+            constante = Double.parseDouble(txtConstante.getText());
+        }
+        if (txtIntervaloA.getText().equals("")) {
+            intervaloA = 0;
+        } else {
+            intervaloA = Double.parseDouble(txtIntervaloA.getText());
+        }
+        if (txtIntervaloB.getText().equals("")) {
+            intervaloB = 0;
+        } else {
+            intervaloB = Double.parseDouble(txtIntervaloB.getText());
+        }
+        if (txtPorcentajeError.getText().equals("")) {
+            porcentajeError = 0.001;
+        } else {
+            porcentajeError = Double.parseDouble(txtPorcentajeError.getText());
+        }
+
+        seleccionCb = cbDecimales.getSelectedIndex();
+        numeroDecimales = Integer.parseInt(cbDecimales.getItemAt(seleccionCb));
+
+        fx0 = ((grado6 * (Math.pow(intervaloA, 6))) + (grado5 * (Math.pow(intervaloA, 5))) + (grado4 * (Math.pow(intervaloA, 4))) + (grado3 * (Math.pow(intervaloA, 3))) + (grado2 * (Math.pow(intervaloA, 2))) + (grado1 * (Math.pow(intervaloA, 1))) + (constante));
+        fx1 = ((grado6 * (Math.pow(intervaloB, 6))) + (grado5 * (Math.pow(intervaloB, 5))) + (grado4 * (Math.pow(intervaloB, 4))) + (grado3 * (Math.pow(intervaloB, 3))) + (grado2 * (Math.pow(intervaloB, 2))) + (grado1 * (Math.pow(intervaloB, 1))) + (constante));
+
+        JOptionPane.showMessageDialog(rootPane, "fx0: " + fx0 + "\n" + "fx1: " + fx1, "Valor inicial de fx0 y fx1", JOptionPane.INFORMATION_MESSAGE);
+
+        do {
+            contador++;
+            System.out.println("===Numero de iteraciones===" + contador);
+
+            System.out.println("x0 : " + intervaloA);
+            System.out.println("x1 : " + intervaloB);
+
+            intervalo2B = intervaloB;
+
+            fx0 = (grado6 * (Math.pow(intervaloA, 6)) + grado5 * (Math.pow(intervaloA, 5)) + grado4 * (Math.pow(intervaloA, 4)) + grado3 * (Math.pow(intervaloA, 3)) + grado2 * (Math.pow(intervaloA, 2)) + grado1 * (Math.pow(intervaloA, 1)) + (constante));
+            System.out.println("fxa : " + String.format("%." + numeroDecimales + "f", fx0));
+            fx1 = ((grado6 * (Math.pow(intervaloB, 6))) + (grado5 * (Math.pow(intervaloB, 5))) + (grado4 * (Math.pow(intervaloB, 4))) + (grado3 * (Math.pow(intervaloB, 3))) + (grado2 * (Math.pow(intervaloB, 2))) + ((grado1 * (Math.pow(intervaloB, 1)))) + (constante));
+            System.out.println("fxb : " + String.format("%." + numeroDecimales + "f", fx1));
+
+            if (fx0 == 0) {
+                JOptionPane.showMessageDialog(null, "Se encontro la raiz de fx0", "Raiz encontrada", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("El valor es: " + intervaloA + " Su RAIZ: " + String.format("%." + numeroDecimales + "f", fx0));
+                return;
+            } else if (fx1 == 0) {
+                JOptionPane.showMessageDialog(null, "Se encontro la raiz de fx1", "Raiz encontrada", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("El valor es: " + intervaloA + " Su RAIZ: " + String.format("%." + numeroDecimales + "f", fx1));
+                return;
+            }
+
+            xn = intervaloB - (fx1 * (intervaloB - intervaloA)) / (fx1 - fx0);
+            System.out.println("Aprox Raiz: " + xn);
+
+            ec = Math.abs(((xn - intervaloB) / xn) * 100);
+            System.out.println("Error: " + ec);
+
+            if (ec <= porcentajeError) {
+                System.out.println("Porcentaje de error: " + porcentajeError);
+            } else {
+                intervaloB = xn;
+                intervaloA = intervalo2B;
+            }
+        } while (contador <= 100);
+    }//GEN-LAST:event_btnCalcularActionPerformed
 
     /**
      * @param args the command line arguments
